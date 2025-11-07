@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="LineReport"
+              language="java"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20">
+
+    <property name="net.sf.jasperreports.summary.on.new.page" value="false"/>
+    <property name="net.sf.jasperreports.title.on.new.page" value="false"/>
+    <property name="net.sf.jasperreports.page.break.no.space" value="true"/>
+
+    <style name="FullName" fontName="Montserrat" fontSize="14"  forecolor="#3171c6" />
+    <style name="BlueText" fontName="Montserrat" fontSize="12" forecolor="#3171c6" />
+    <style name="BlackText"
+           isDefault="true"
+           fontName="OpenSans"
+           fontSize="10"
+           forecolor="#2d2d2d"
+    />
+
+    <parameter name="courses"/>
+    <parameter name="leftSkills"/>
+    <parameter name="rightSkills"/>
+
+    <field name="personalInfo" class="my.project.aigrg.model.PersonalInfo"/>
+    <field name="contacts" class="my.project.aigrg.model.Contacts"/>
+    <field name="experience" class="my.project.aigrg.model.Experience"/>
+    <field name="education" class="my.project.aigrg.model.Education"/>
+
+
+    <title>
+        <band height="80" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="555" height="20" style="FullName"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{personalInfo}.getFullName()]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="20" width="555" height="20"/>
+                <textFieldExpression><![CDATA[$F{personalInfo}.getProfessionName()]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="0" y="40" width="555" height="20"/>
+                <textFieldExpression><![CDATA[$F{contacts}.getMainContacts()]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="0" y="60" width="555" height="20"/>
+                <textFieldExpression><![CDATA[$F{contacts}.getTextLinks()]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <pageHeader>
+        <band height="20" splitType="Stretch">
+            <line>
+                <reportElement x="-20" y="10" width="595" height="1" backcolor=""/>
+            </line>
+        </band>
+    </pageHeader>
+
+    <columnHeader>
+        <band height="40" splitType="Stretch">
+            <printWhenExpression><![CDATA[$F{personalInfo}.getAboutMe().isPresent()]]></printWhenExpression>
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="20" style="BlueText"/>
+                <textElement/>
+                <text><![CDATA[Обо мне]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="20" width="555" height="20"/>
+                <textFieldExpression><![CDATA[$F{personalInfo}.getAboutMe().get()]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="105" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="15" width="555" height="20" style="BlueText"/>
+                <textElement/>
+                <text><![CDATA[Опыт работы]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="0" y="35" width="555" height="20"/>
+                <textFieldExpression><![CDATA[$F{experience}.getName()]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="55" width="555" height="40"/>
+                <textFieldExpression><![CDATA[$F{experience}.getTextTechnologies()]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="85" width="555" height="20"/>
+                <textFieldExpression><![CDATA[$F{experience}.getTextProjects()]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <summary>
+        <band height="180" splitType="Stretch">
+            <!-- Левая колонка -->
+            <frame>
+                <reportElement x="0" y="15" width="300" height="160"/>
+                <staticText>
+                    <reportElement x="0" y="0" width="300" height="20" style="BlueText">
+                        <printWhenExpression><![CDATA[$F{education} != null]]></printWhenExpression>
+                    </reportElement>
+                    <textElement/>
+                    <text><![CDATA[Образование]]></text>
+                </staticText>
+                <textField textAdjust="StretchHeight">
+                    <reportElement x="0" y="20" width="300" height="60">
+                        <printWhenExpression><![CDATA[$F{education} != null]]></printWhenExpression>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{education}.getTextEducation()]]></textFieldExpression>
+                </textField>
+
+                <staticText>
+                    <reportElement x="0" y="90" width="300" height="20" style="BlueText">
+                        <printWhenExpression><![CDATA[$P{courses} != null]]></printWhenExpression>
+                    </reportElement>
+                    <textElement/>
+                    <text><![CDATA[Курсы]]></text>
+                </staticText>
+                <textField textAdjust="StretchHeight">
+                    <reportElement x="0" y="110" width="300" height="60">
+                        <printWhenExpression><![CDATA[$P{courses} != null]]></printWhenExpression>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$P{courses}]]></textFieldExpression>
+                </textField>
+            </frame>
+
+            <!-- Правая колонка -->
+            <frame>
+                <reportElement x="320" y="15" width="234" height="160"/>
+                <staticText>
+                    <reportElement x="0" y="0" width="234" height="20" style="BlueText"/>
+                    <textElement/>
+                    <text><![CDATA[Навыки]]></text>
+                </staticText>
+                <!-- Левая колонка -->
+                <frame>
+                    <reportElement x="0" y="20" width="114" height="160"/>
+                    <textField textAdjust="StretchHeight">
+                        <reportElement x="0" y="0" width="114" height="160"/>
+                        <textFieldExpression><![CDATA[$P{leftSkills}]]></textFieldExpression>
+                    </textField>
+                </frame>
+
+                <!-- Правая колонка -->
+                <frame>
+                    <reportElement x="120" y="20" width="114" height="160"/>
+                    <textField textAdjust="StretchHeight">
+                        <reportElement x="0" y="0" width="114" height="160"/>
+                        <textFieldExpression><![CDATA[$P{rightSkills}]]></textFieldExpression>
+                    </textField>
+                </frame>
+            </frame>
+        </band>
+    </summary>
+
+</jasperReport>

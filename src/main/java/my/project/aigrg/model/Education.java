@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -16,19 +15,23 @@ import java.util.Optional;
 @JsonClassDescription("Information about education of the person")
 public class Education {
 
-  @JsonPropertyDescription("Name of the educational institution")
-  Optional<String> name;
+	@JsonPropertyDescription("Name of the educational institution")
+	String name;
 
-  @JsonPropertyDescription("The year of the beginning of Education")
-  Optional<Integer> startYear;
+	@JsonPropertyDescription("The year of the beginning of Education")
+	Integer startYear;
 
-  @JsonPropertyDescription("Year of graduation")
-  Optional<Integer> endYear;
+	@JsonPropertyDescription("Year of graduation")
+	Integer endYear;
 
-  @JsonPropertyDescription("Faculty name")
-  Optional<String> faculty;
+	@JsonPropertyDescription("Faculty name")
+	String faculty;
 
-  @JsonPropertyDescription("List of completed courses")
-  Optional<List<Course>> courses;
-
+	public String getTextEducation() {
+		return String.join("\n",
+				Objects.toString(name, ""),
+				(startYear != null && endYear != null) ? startYear + " - " + endYear : "",
+				Objects.toString(faculty, "")
+		).trim();
+	}
 }

@@ -13,9 +13,17 @@ import lombok.experimental.FieldDefaults;
 @JsonClassDescription("Information about completed courses")
 public class Course {
 
-  @JsonPropertyDescription("Course name")
-  String name;
+	@JsonPropertyDescription("Course name")
+	String name;
 
-  @JsonPropertyDescription("Link to the course")
-  String url;
+	@JsonPropertyDescription("Link to the course")
+	String url;
+
+	public String getTextCourse() {
+		if (name == null) {return null;}
+
+		String furl = (url != null) ? "(" + url + ")" : "";
+		return furl.isEmpty() ? name : name + "\n" + furl;
+	}
+
 }

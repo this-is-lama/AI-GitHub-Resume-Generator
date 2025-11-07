@@ -15,12 +15,19 @@ import java.util.Optional;
 @JsonClassDescription("Main information about person")
 public class PersonalInfo {
 
-  @JsonPropertyDescription("The name of the person")
-  String name;
+	@JsonPropertyDescription("The name of the person")
+	String name;
 
-  @JsonPropertyDescription("The surname of the person")
-  String surname;
+	@JsonPropertyDescription("The surname of the person")
+	String surname;
 
-  @JsonPropertyDescription("The information about person")
-  Optional<String> aboutMe;
+	@JsonPropertyDescription("Profession name")
+	String professionName;
+
+	@JsonPropertyDescription("The information about person")
+	Optional<String> aboutMe;
+
+	public String getFullName() {
+		return surname + " " + name;
+	}
 }

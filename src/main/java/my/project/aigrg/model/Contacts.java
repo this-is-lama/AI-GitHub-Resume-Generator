@@ -15,12 +15,20 @@ import java.util.List;
 @JsonClassDescription("Contact information")
 public class Contacts {
 
-  @JsonPropertyDescription("Email")
-  String mail;
+	@JsonPropertyDescription("Email")
+	String mail;
 
-  @JsonPropertyDescription("Phone number")
-  String phone;
+	@JsonPropertyDescription("Phone number")
+	String phone;
 
-  @JsonPropertyDescription("Links to other social networks")
-  List<String> links;
+	@JsonPropertyDescription("Links to other social networks")
+	List<String> links;
+
+	public String getMainContacts() {
+		return phone + " | " + mail;
+	}
+
+	public String getTextLinks() {
+		return String.join("\n", links);
+	}
 }

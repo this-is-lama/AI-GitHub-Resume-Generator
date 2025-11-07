@@ -12,27 +12,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class OpenAiService  {
 
-  private final OpenAIClient client;
+	private final OpenAIClient client;
 
-  @Value("${prompt.text}")
-  private String prompt;
+	@Value("${prompt.text}")
+	private String prompt;
 
-  @Value("${model.name}")
-  private String model;
+	@Value("${model.name}")
+	private String model;
 
-  public ResumeData generate(String url) {
-    var params = ChatCompletionCreateParams.builder()
-        .addUserMessage(getPrompt(url))
-        .responseFormat(ResumeData.class)
-        .model(model)
-        .build();
-    var chat = client.chat().completions().create(params);
-    var content = chat.choices().getFirst().message().content();
-    return content.orElse(null);
-  }
+	public ResumeData generate(String url) {
+		var params = ChatCompletionCreateParams.builder()
+				.addUserMessage(createPrompt(url))
+				.responseFormat(ResumeData.class)
+				.model(model)
+				.build();
+		var chat = client.chat().completions().create(params);
+		var content = chat.choices().getFirst().message().content();
+		return content.orElse(null);
+	}
 
-  private String getPrompt(String url) {
-    return prompt.formatted(url);
-  }
+	private String createPrompt(String url) {
+		return prompt.formatted(url);
+	}
 
 }

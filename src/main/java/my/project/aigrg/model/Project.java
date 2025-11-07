@@ -13,12 +13,16 @@ import lombok.experimental.FieldDefaults;
 @JsonClassDescription("Information about the project")
 public class Project {
 
-  @JsonPropertyDescription("Project name")
-  String name;
+	@JsonPropertyDescription("Project name")
+	String name;
 
-  @JsonPropertyDescription("Project description: functionality and what it allows you to do")
-  String description;
+	@JsonPropertyDescription("Project description: functionality and what it allows you to do")
+	String description;
 
-  @JsonPropertyDescription("Link to the project on github")
-  String url;
+	@JsonPropertyDescription("Link to the project on github")
+	String url;
+
+	public String getTextProject() {
+		return name + "\n" + description + "\n" + url;
+	}
 }
